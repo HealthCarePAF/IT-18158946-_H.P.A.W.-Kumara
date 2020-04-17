@@ -1,30 +1,26 @@
-package PaymentAPI;
+package com.paf.PafProj;
 
-import com.paf.PafProj.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 
-
-
-
-
-
-@Path("/Payment")
+@Path("Payment")
 public class PaymentAPIResource {
 
 	//-------------------------SELECT ALL-----------------------
 	@GET
-	@Path("/SelectAll")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/Select")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ArrayList<Payment> SelectAll() throws Exception
 	{
 		PaymentHandlr hndlr = new PaymentHandlr();
 		return hndlr.SelectAll();
 	}
-	
+
+
+
 	//-------------------------SELECT WHERE-----------------------
 		@GET
 		@Path("/SelectPay/{pid}")
@@ -50,7 +46,7 @@ public class PaymentAPIResource {
 		
 		@DELETE
 		@Path("/Delete/{pid}")
-		public String Delete_Details(@PathParam("pid") int pid) throws SQLException
+		public String Delete_Details(@PathParam("pid") String pid) throws SQLException
 		{
 			PaymentHandlr hndlr = new PaymentHandlr();
 			String retval = hndlr.DeleteDetails(pid);
@@ -70,3 +66,5 @@ public class PaymentAPIResource {
 		
 
 }
+
+

@@ -1,17 +1,15 @@
 package com.paf.PafProj;
 
-
-
 import java.sql.*;
 import java.util.ArrayList;
 
 public class PaymentHandlr {
 
 	//Select All
-	public ArrayList<Payment> SelectAll() throws SQLException
+	public ArrayList<Payment> SelectAll() throws Exception
 	{
-		ArrayList<Payment> list = new ArrayList<Payment>();
-		String Query = "SELECT * FROM `paymendetails` ORDER BY `P_ID` ASC ";
+		ArrayList<Payment> list = new ArrayList();
+		String Query = "SELECT * FROM `paymendetails`";
 		DBConnection newconn = new DBConnection();
 		ResultSet Select = newconn.GtResultSet(Query);
 		
@@ -34,6 +32,8 @@ public class PaymentHandlr {
 			
 	}
 	
+	
+
 	//Select Where
 	public Payment SelectWhere(int pid) throws SQLException
 	{
@@ -129,4 +129,5 @@ public class PaymentHandlr {
 			return "Updation Unsuccessful";
 	    }
 	}
+	
 }

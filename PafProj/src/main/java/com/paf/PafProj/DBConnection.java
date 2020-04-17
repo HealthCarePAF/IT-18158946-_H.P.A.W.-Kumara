@@ -1,54 +1,45 @@
 package com.paf.PafProj;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBConnection {
+protected Connection con;
 
-	Connection con;
+	public DBConnection() {
 
-	public Connection connect() {
-
-		Connection con1 = null;
-		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con1 = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/payment", "root", "");
+			Connection conn = null;
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/payment?useTimezone=true&serverTimezone=UTC", "root", "");
+			con = conn;
 
-			// Connection Message
-			System.out.println("Database Connection Successful");
-
+			System.out.print("Database is connected !");
+			
 		} catch (Exception e) {
-
-			// Connection Message
-			e.printStackTrace();
-			System.out.println("Database Connection Failed");
-
+			System.out.print("Do not connect to DB - Error: " + e);
 		}
 
-		return con1;
 	}
 
+
+//	  public Connection getCon() { return con; }
+	  
+	  public Statement GtStatement() throws SQLException { 
+		  Statement stat = con.createStatement(); 
+		  return stat; }
+	  
+	  public ResultSet GtResultSet(String query) throws SQLException { 
+		  Statement Stat = GtStatement();
+		  ResultSet Result = Stat.executeQuery(query); 
+		  return Result; }
+	  
+	  public PreparedStatement GtPrepStatement(String query) throws SQLException {
+	  PreparedStatement PrepStat = con.prepareStatement(query);
+	  return PrepStat; }
 	
-	
-	
-	public Connection getCon() {
-		return con;
-	}
-
-	public Statement GtStatement() throws SQLException {
-		Statement stat = con.createStatement();
-		return stat;
-	}
-
-	public ResultSet GtResultSet(String query) throws SQLException {
-		Statement Stat = GtStatement();
-		ResultSet Result = Stat.executeQuery(query);
-		return Result;
-	}
-
-	public PreparedStatement GtPrepStatement(String query) throws SQLException {
-		PreparedStatement PrepStat = con.prepareStatement(query);
-		return PrepStat;
-	}
-
 }
