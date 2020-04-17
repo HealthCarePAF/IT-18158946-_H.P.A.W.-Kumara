@@ -1,9 +1,10 @@
-package com.paf.PafProj;
+package PaymentAPI;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import com.paf.PafProj.*;
 
 
 @Path("Payment")

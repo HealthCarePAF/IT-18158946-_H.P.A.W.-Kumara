@@ -9,7 +9,7 @@ public class PaymentHandlr {
 	//Select All
 	public ArrayList<Payment> SelectAll() throws Exception
 	{
-		ArrayList<Payment> list = new ArrayList();
+		ArrayList<Payment> list = new ArrayList<Payment>();
 		String Query = "SELECT * FROM `paymendetails` ORDER BY `P_ID` ASC ";
 
 		DBConnection newconn = new DBConnection();
