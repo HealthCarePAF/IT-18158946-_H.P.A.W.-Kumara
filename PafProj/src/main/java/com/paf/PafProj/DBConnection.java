@@ -27,14 +27,14 @@ protected Connection con;
 	}
 
 
-//	  public Connection getCon() { return con; }
-	  
-	  public Statement GtStatement() throws SQLException { 
+	public Connection getCon() { return con; }
+
+	 /* public Statement GtStatement() throws SQLException { 
 		  Statement stat = con.createStatement(); 
-		  return stat; }
+		  return stat; }*/
 	  
 	  public ResultSet GtResultSet(String query) throws SQLException { 
-		  Statement Stat = GtStatement();
+		  Statement Stat =  con.createStatement(); 
 		  ResultSet Result = Stat.executeQuery(query); 
 		  return Result; }
 	  

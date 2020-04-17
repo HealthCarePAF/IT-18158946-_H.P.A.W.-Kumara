@@ -19,22 +19,22 @@ public class PaymentAPIResource {
 		return hndlr.SelectAll();
 	}
 
-
-
+	
 	//-------------------------SELECT WHERE-----------------------
-		@GET
-		@Path("/SelectPay/{pid}")
-		@Produces(MediaType.APPLICATION_JSON)
-		public Payment Select_Where(@PathParam("pid") int pid) throws SQLException
+	@GET
+	@Path("/SelectW/{pid}")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+		public Payment Select_Where(@PathParam("pid") String pid) throws SQLException
 		{
 			PaymentHandlr hndlr = new PaymentHandlr();
 			return hndlr.SelectWhere(pid);
 		}
 		
-	//-------------------------INSERT INTO--------------------------
-					
+	
+	//-------------------------INSERT INTO--------------------------		
 		@POST
 		@Path("/Insert")
+		@Consumes(MediaType.APPLICATION_JSON)
 		public String insert_details(Payment pay) throws SQLException
 		{
 			PaymentHandlr hndlr = new PaymentHandlr();

@@ -3,13 +3,15 @@ package com.paf.PafProj;
 import java.sql.*;
 import java.util.ArrayList;
 
+
 public class PaymentHandlr {
 
 	//Select All
 	public ArrayList<Payment> SelectAll() throws Exception
 	{
 		ArrayList<Payment> list = new ArrayList();
-		String Query = "SELECT * FROM `paymendetails`";
+		String Query = "SELECT * FROM `paymendetails` ORDER BY `P_ID` ASC ";
+
 		DBConnection newconn = new DBConnection();
 		ResultSet Select = newconn.GtResultSet(Query);
 		
@@ -31,15 +33,18 @@ public class PaymentHandlr {
 			return list;
 			
 	}
-	
-	
 
 	//Select Where
-	public Payment SelectWhere(int pid) throws SQLException
+	public Payment SelectWhere(String pid) throws SQLException
 	{
-		String Query = "SELECT * FROM `paymendetails` WHERE `P_ID` = "+pid+" ";
+		
+		char ch='"';
+		String Queryq = "SELECT * FROM `paymendetails` WHERE `P_ID` =";
+		String Query = Queryq +ch+ pid+ch;
 		DBConnection newconn = new DBConnection();
 		ResultSet Select = newconn.GtResultSet(Query); 
+		
+		Select.next();
 		
 		Payment pay = new Payment();
 		
@@ -49,9 +54,7 @@ public class PaymentHandlr {
 		pay.setP_method(Select.getString(4));
 		pay.setP_Description(Select.getString(5));
 
-
 		newconn.con.close();
-		
 		return pay;
 	}
 
@@ -59,14 +62,14 @@ public class PaymentHandlr {
 	public String InsertIntoPayment(Payment pay) throws SQLException
 	{
 		DBConnection newconn = new DBConnection();
-		String Query = "INSERT INTO `paymendetails` (``, ``) VALUES (?,?)";
+		String Query = "INSERT INTO `paymendetails` (`P_ID`,`Paient_id`,`P_amount`,`P_method`,`P_Description`) VALUES (?,?,?,?,?)";
 		PreparedStatement Insert = newconn.GtPrepStatement(Query);
 		
 		Insert.setString(1, pay.getP_ID());
 		Insert.setInt(2, pay.getPaient_id());
-		Insert.setDouble(2, pay.getP_amount());
-		Insert.setString(1, pay.getP_method());
-		Insert.setString(1, pay.getP_Description());
+		Insert.setDouble(3, pay.getP_amount());
+		Insert.setString(4, pay.getP_method());
+		Insert.setString(5, pay.getP_Description());
 		
 		
 		if(!Insert.execute())
@@ -80,27 +83,26 @@ public class PaymentHandlr {
 			return "Error Data Insert Unsucessful";
 		}
 		
-		
 	}
 	
 	//Delete
 	public String DeleteDetails(String payid) throws SQLException
 	{
 		DBConnection newconn = new DBConnection();
-		String query = "DELETE FROM `paymendetails` WHERE PaymenID = ? ";
-		PreparedStatement perpstat = newconn.GtPrepStatement(query);
+		String query = "DELETE FROM `paymendetails` WHERE `P_ID` = ?";
+		PreparedStatement prepstat = newconn.GtPrepStatement(query);
+		prepstat.setString(1,payid);
 		
-		perpstat.setString(1,payid);
 		
-		if(!perpstat.execute())
+		if(!prepstat.execute())
 		{
 			newconn.con.close();
-			return  "Delete SucessFull";
+			return  "Deleted Sucessfully";
 		}
 		else
 		{
 			newconn.con.close();
-			return  "Delete UnsucessFull";
+			return  "Delete Unsucessfull";
 		}
 	}
 	
@@ -108,7 +110,7 @@ public class PaymentHandlr {
 	public String updatePayment(Payment pay)throws SQLException
 	{
 		DBConnection newconn = new DBConnection();
-		String query = "UPDATE `paymendetails` SET `P_amount` = ? WHERE `paymendetails`.`P_ID` = 'p0001'; ";
+		String query = "UPDATE `paymendetails` SET `Paient_id`=?,`P_amount`=?,`P_method`=?,`P_Description`=? WHERE `paymendetails`.`P_ID` = ?; ";
 	    PreparedStatement prepstat = newconn.GtPrepStatement(query);
 	   
 	    prepstat.setInt(1, pay.getPaient_id());
@@ -121,12 +123,12 @@ public class PaymentHandlr {
 	    if(!prepstat.execute())
 	    {
 	    	newconn.con.close();
-			return "Successfully Updated";
+			return "Update Sucessfull";
 	    }
 	    else
 	    {
 	    	newconn.con.close();
-			return "Updation Unsuccessful";
+			return "Update Unsucessfull";
 	    }
 	}
 	
