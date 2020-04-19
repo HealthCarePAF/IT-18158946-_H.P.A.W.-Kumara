@@ -8,9 +8,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBConnection {
+	
 protected Connection con;
 
-	public DBConnection() {
+	public DBConnection() 
+	{
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -25,13 +27,6 @@ protected Connection con;
 		}
 
 	}
-
-
-	public Connection getCon() { return con; }
-
-	 /* public Statement GtStatement() throws SQLException { 
-		  Statement stat = con.createStatement(); 
-		  return stat; }*/
 	  
 	  public ResultSet GtResultSet(String query) throws SQLException { 
 		  Statement Stat =  con.createStatement(); 
